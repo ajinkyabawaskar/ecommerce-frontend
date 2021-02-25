@@ -1,32 +1,18 @@
-<!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" routerLink="/">
-            FlipZon
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleCollapsed()">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div id="navbarNav" [ngClass]="{'collapse': collapsed, 'navbar-collapse justify-content-end': true}">
-            <ul class="navbar-nav align-items-center">
-                <li class="nav-item">
-                    <a class="btn btn-sm btn-secondary px-4" routerLink="/signin">Sign In</a>
-                </li>
-                <span class="m-1"></span>
-                <li class="nav-item">
-                    <a class="btn btn-sm btn-secondary px-4" routerLink="/signup">Signup</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav> -->
-
 <div class="example-container" [class.example-is-mobile]="mobileQuery.matches">
     <mat-toolbar color="primary" class="example-toolbar">
-        <button mat-icon-button (click)="snav.toggle()">
-            <mat-icon>menu</mat-icon>
-        </button>
-        <h1 class="example-app-name">FlipZon</h1>
+        <!-- <button mat-icon-button (click)="snav.toggle()">
+        <mat-icon>menu</mat-icon>
+    </button> -->
+        <h1 routerLink="/" class="example-app-name">FlipZon</h1>
+        <span class="example-spacer"></span>
+        <button *ngIf="router.url == '/' && !loggedIn" mat-flat-button routerLink="/signin">Sign In</button>
+        <button *ngIf="loggedIn && router.url != '/shop'" mat-flat-button color="primary" routerLink="/shop" class="mr-2">
+      <mat-icon>arrow_back</mat-icon> Shop More
+    </button>
+        <button *ngIf="loggedIn && router.url != '/cart'" mat-flat-button color="primary" routerLink="/cart" class="mr-2">
+      <mat-icon matBadge="4" matBadgeColor="warn" matBadgeSize="small">shopping_cart</mat-icon>
+    </button>
+        <button *ngIf="loggedIn" mat-flat-button (click)="logout()">Logout</button>
     </mat-toolbar>
 
     <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">

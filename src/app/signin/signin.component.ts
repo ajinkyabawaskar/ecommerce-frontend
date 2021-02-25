@@ -26,7 +26,7 @@ export class SigninComponent implements OnInit {
     private userService: UserService) {
     // redirect to home if already logged in
     if (this.userService.currentUserValue) {
-      this.router.navigate(['/']);
+      this.router.navigate(['/shop']);
     }
     this.user = new User();
   }
@@ -49,7 +49,7 @@ export class SigninComponent implements OnInit {
       .subscribe({
         next: () => {
           // get return url from route parameters or default to '/'
-          const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+          const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/shop';
           this.router.navigate([returnUrl]);
         },
         error: error => {

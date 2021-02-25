@@ -29,7 +29,7 @@ export class SignupComponent  implements OnInit {
     private userService: UserService) {
     // redirect to home if already logged in
     if (this.userService.currentUserValue) {
-      this.router.navigate(['/']);
+      this.router.navigate(['/shop']);
     }
     this.user = new User();
   }
@@ -69,7 +69,7 @@ export class SignupComponent  implements OnInit {
               this.router.navigate([returnUrl]);
             },
             error: error => {
-              if(error = 'Access Denied') {
+              if(error == 'Access Denied') {
                 this.error = 'Incorrect username or password';
               }
               else {
@@ -82,7 +82,7 @@ export class SignupComponent  implements OnInit {
         },
         error: error => {
           console.log(error);
-          if(error = 'Access Denied') {
+          if(error == 'Access Denied') {
             this.error = 'We already have an account with the username you chose!';
           }
           else {

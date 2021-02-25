@@ -1,0 +1,51 @@
+<div *ngFor="let product of products" class="col-xl-3 col-lg-4 col-md-4 col-sm-6">
+  <div class="mb-4">
+    <mat-card class="shadow">
+      <mat-card-subtitle style="background-image: url({{product.image}})" class="card-image">
+
+      </mat-card-subtitle>
+      <mat-card-subtitle class="text-black">
+        <div class="product-name">
+          {{product.name | slice:0:30}}
+        </div>
+        <div class="mt-1">
+          <span class="badge-green">
+            {{product.ratings | slice: 0: 3}}
+            <img class="rating-star"
+                 src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMyIgaGVpZ2h0PSIxMiI+PHBhdGggZmlsbD0iI0ZGRiIgZD0iTTYuNSA5LjQzOWwtMy42NzQgMi4yMy45NC00LjI2LTMuMjEtMi44ODMgNC4yNTQtLjQwNEw2LjUuMTEybDEuNjkgNC4wMSA0LjI1NC40MDQtMy4yMSAyLjg4Mi45NCA0LjI2eiIvPjwvc3ZnPg=="
+                 alt="">
+          </span>
+          <span class="ml-1">
+              {{product.ratings | slice: 3}}
+            </span>
+        </div>
+      </mat-card-subtitle>
+      <mat-card-content>
+        <div class="" *ngFor="let feature of product.features">
+          • {{feature}}
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <div class="d-flex flex-wrap justify-content-between align-items-center px-3 px-sm-4">
+          <div class="mb-2">
+              <span class="offeredPrice">
+              ₹{{product.offeredPrice}}
+              </span>
+            <span class="strikethrough pl-1">
+              ₹{{product.actualPrice}}
+              </span>
+          </div>
+          <div class="mb-2">
+            <button mat-stroked-button color="primary">
+              <mat-icon class="mr-1">add_shopping_cart</mat-icon>
+              Add
+            </button>
+          </div>
+        </div>
+      </mat-card-actions>
+      <mat-card-footer>
+
+      </mat-card-footer>
+    </mat-card>
+  </div>
+</div>
