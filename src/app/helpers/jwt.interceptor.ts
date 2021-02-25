@@ -1,9 +1,9 @@
 /**
- * The JWT Interceptor intercepts http requests from the application to add a JWT auth token to 
+ * The JWT Interceptor intercepts http requests from the application to add a JWT auth token to
  * the Authorization header if the user is logged in and the request is to the application api url
- *  (environment.apiUrl). It's implemented using the HttpInterceptor class included in the HttpClientModule, 
- * by extending the HttpInterceptor class you can create a custom interceptor to modify http requests 
- * before they get sent to the server. Http interceptors are added to the request pipeline in the providers 
+ *  (environment.apiUrl). It's implemented using the HttpInterceptor class included in the HttpClientModule,
+ * by extending the HttpInterceptor class you can create a custom interceptor to modify http requests
+ * before they get sent to the server. Http interceptors are added to the request pipeline in the providers
  * section of the app.module.ts file.
  */
 
@@ -13,6 +13,9 @@ import { Observable } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 import { UserService } from '../services/user-service.service';
+import { User } from '../models/user.model';
+import { BehaviorSubject } from 'rxjs';
+import {ProductService} from '../services/product.service';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
@@ -30,7 +33,7 @@ export class JwtInterceptor implements HttpInterceptor {
                 }
             });
         }
-
         return next.handle(request);
     }
 }
+

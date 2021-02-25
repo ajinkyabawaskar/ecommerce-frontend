@@ -10,18 +10,6 @@ import { User } from '../models/user.model';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
-
-  currentUser: User;
-
-  constructor(
-    private router: Router,
-    private userService: UserService
-  ) {
-    this.userService.currentUser.subscribe(x => this.currentUser = x);
-  }
-
-  logout() {
-    this.userService.logout();
-    this.router.navigate(['/signin']);
+  constructor() {
   }
 }

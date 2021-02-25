@@ -1,18 +1,20 @@
+import {Injectable, EventEmitter} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {User} from '../models/user.model';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {environment} from 'src/environments/environment';
 
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { User } from '../models/user.model';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
 
 
 @Injectable()
 export class UserService {
 
+  loginEvent: EventEmitter<any> = new EventEmitter();
+
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
-
+  isLoggedIn: boolean = false;
   private usersUrl: string;
 
   constructor(private http: HttpClient) {
@@ -26,27 +28,34 @@ export class UserService {
   }
 
   login(user: User) {
+
+
     return this.http.post<any>(`${environment.apiUrl}/authenticate`, user)
-      .pipe(map(user2 => {
-        // store user details and jwt token in local storage to keep user logged in between page refreshes
-        localStorage.setItem('currentUser', JSON.stringify(user2));
-        this.currentUserSubject.next(user2);
-        return user2;
-      }));
+      .pipe(
+        map(
+          response => {
+            // store user details and jwt token in local storage to keep user logged in between page refreshes
+            user = new User();
+            user.token = response.jwt;
+            localStorage.setItem('currentUser', JSON.stringify(user));
+            this.currentUserSubject.next(user);
+            this.isLoggedIn = true;
+            this.loginEvent.emit(this.isLoggedIn);
+            return response;
+          }));
+
   }
 
   logout() {
+    this.isLoggedIn = false;
+    this.loginEvent.emit(this.isLoggedIn);
     // remove user from local storage to log user out
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
   }
 
   public signup(user: User) {
-    return this.http.post<User>(this.usersUrl + "/user/", user);
+    return this.http.post<User>(this.usersUrl + '/user/register', user);
   }
-
-  // public login(user: User) {
-  //   return this.http.post<User>(this.usersUrl + "/authenticate", user);
-  // }
 
 }
