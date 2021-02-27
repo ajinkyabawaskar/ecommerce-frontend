@@ -17,6 +17,7 @@ import { ProductService } from './services/product.service';
 import {CartComponent} from './cart/cart.component';
 import {ProductComponent} from './product/product.component';
 import {LoaderInterceptor} from './helpers/loader.intercepter';
+import { ViewProductComponent } from './view-product/view-product.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import {LoaderInterceptor} from './helpers/loader.intercepter';
     NavbarComponent,
     ShopComponent,
     CartComponent,
-    ProductComponent
+    ProductComponent,
+    ViewProductComponent
   ],
   imports: [
     BrowserModule,

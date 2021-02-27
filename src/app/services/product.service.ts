@@ -1,9 +1,9 @@
-import {EventEmitter, Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {User} from '../models/user.model';
-import {BehaviorSubject, Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
-import {environment} from 'src/environments/environment';
+import { EventEmitter, Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { User } from '../models/user.model';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class ProductService {
@@ -29,12 +29,32 @@ export class ProductService {
   }
 
   getProductsByCategory(category: string) {
-      return this.http.get<any>(`${environment.apiUrl}/product/category/${category}`).pipe(
-        map(
-          products => {
-            return products;
-          }
-        )
-      );
+    return this.http.get<any>(`${environment.apiUrl}/product/category/${category}`).pipe(
+      map(
+        products => {
+          return products;
+        }
+      )
+    );
+  }
+
+  getProductsByName(name: string) {
+    return this.http.get<any>(`${environment.apiUrl}/product/name/${name}`).pipe(
+      map(
+        products => {
+          return products;
+        }
+      )
+    );
+  }
+
+  getProductById(id: string) {
+    return this.http.get<any>(`${environment.apiUrl}/product/id/${id}`).pipe(
+      map(
+        product => {
+          return product;
+        }
+      )
+    );
   }
 }
