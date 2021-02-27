@@ -7,6 +7,7 @@ import {AuthGuard} from './helpers/auth.guard';
 import {HomeComponent} from './home/home.component';
 import {ShopComponent} from './shop/shop.component';
 import {CartComponent} from './cart/cart.component';
+import { ViewProductComponent } from './view-product/view-product.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -14,8 +15,9 @@ const routes: Routes = [
   {path: 'signup', component: SignupComponent},
   {path: 'shop', component: ShopComponent, canActivate: [AuthGuard]},
   {path: 'cart', component: CartComponent, canActivate: [AuthGuard]},
+  {path: 'view-product/:id', component: ViewProductComponent, canActivate: [AuthGuard]},
   // otherwise redirect to home
-  {path: '**', redirectTo: ''}
+  // {path: '**', redirectTo: ''}
 ];
 
 @NgModule({

@@ -33,3 +33,20 @@ h1.example-app-name {
 .example-spacer {
     flex: 1 1 auto;
 }
+
+.searchbar-container {
+    font-size: 14px;
+}
+
+input::placeholder {
+    color: rgba($color: #fff, $alpha: 0.5);
+}
+
+.search-thumbnail {
+    width: 40px;
+    height: 40px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding-right: 10px;
+}

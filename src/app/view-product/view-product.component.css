@@ -1,0 +1,36 @@
+.product-image {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 300px;
+}
+
+.product-name {
+    color: black;
+    font-size: 1.2rem;
+}
+
+.badge-green {
+    line-height: normal;
+    display: inline-block;
+    color: #fff;
+    padding: 2px 4px 2px 6px;
+    border-radius: 3px;
+    font-weight: 500;
+    font-size: 12px;
+    vertical-align: middle;
+    background-color: #388e3c;
+}
+
+.rating-star {
+    vertical-align: baseline;
+    transform: scale(0.9);
+}
+
+.strikethrough {
+    text-decoration: line-through;
+}
+
+.offeredPrice {
+    font-size: 1.5rem;
+}
