@@ -15,7 +15,7 @@ export class UserService {
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
   isLoggedIn: boolean = false;
-  private usersUrl: string;
+  private readonly usersUrl: string;
 
   constructor(private http: HttpClient) {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
@@ -54,8 +54,8 @@ export class UserService {
     this.currentUserSubject.next(null);
   }
 
-  public signup(user: User) {
-    return this.http.post<User>(this.usersUrl + '/user/register', user);
+  public signup(formData : FormData) {
+    return this.http.post(this.usersUrl + '/user/register', formData);
   }
 
 }

@@ -16,6 +16,7 @@ export class SignupComponent  implements OnInit {
 
   isLinear = false;
 
+  uploadMessage: string = 'Choose Avatar';
   loginForm: FormGroup;
   user: User;
   loading = false;
@@ -40,61 +41,66 @@ export class SignupComponent  implements OnInit {
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
-      password: ['', Validators.required]
+      password: ['', Validators.required],
+      imagePath: ['', Validators.required],
+      email: ['', Validators.required],
+      name: ['', Validators.required]
     });
   }
 
   onSubmit() {
     this.submitted = true;
-
-    // stop here if form is invalid
-    // if (this.loginForm.invalid) {
-    //   return;
-    // }
-
-    console.log(this.user);
-
+    let formData = new FormData();
+    formData.append('file', this.loginForm.get('imagePath').value);
+    formData.append('username', this.user.username);
+    formData.append('password', this.user.password);
+    formData.append('email', this.user.email);
+    formData.append('name', this.user.name);
     this.loading = true;
-    this.userService.signup(this.user)
+
+    this.userService.signup(formData)
       .pipe(first())
       .subscribe({
         next: () => {
-          // get return url from route parameters or default to '/'
           this.userService.login(this.user)
-          .pipe(first())
-          .subscribe({
+            .pipe(first())
+            .subscribe( {
             next: () => {
               // get return url from route parameters or default to '/'
               const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
               this.router.navigate([returnUrl]);
             },
-            error: error => {
-              if(error == 'Access Denied') {
-                this.error = 'Incorrect username or password';
+              error: (error) => {
+                if(error == 'Access Denied') {
+                  this.error = 'Incorrect username or password';
+                }
+                else {
+                  this.error = 'Account created, but couldn\'t log you in!';
+                }
               }
-              else {
-                this.error = 'Account created, but couldn\'t log you in!';
-              }
-            }
-          });
-          const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-          this.router.navigate([returnUrl]);
+          })
         },
-        error: error => {
-          console.log(error);
+        error: (error) => {
           if(error == 'Access Denied') {
-            this.error = 'We already have an account with the username you chose!';
+            this.error = 'Incorrect username or password';
           }
           else {
-            this.error = 'Something went wrong while creating your account!';
+            this.error = 'Account created, but couldn\'t log you in!';
           }
-          this.loading = false;
         }
       });
 
   }
 
-  
+  upload(event) {
+    const file = (event.target as HTMLInputElement).files[0];
+    this.loginForm.patchValue({
+      imagePath: file
+    });
+    this.uploadMessage = file.name;
+    this.loginForm.get('imagePath').updateValueAndValidity()
+  }
+
   req = new FormControl('', [Validators.required]);
   email = new FormControl('', [Validators.required, Validators.email]);
 
@@ -124,5 +130,14 @@ export class SignupComponent  implements OnInit {
       return 'Please enter your email!';
     }
     return this.email.hasError('email') ? 'Please enter a valid email.' : '';
+  }
+
+  openFileBrowser(event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    let element: HTMLElement = document.getElementById('imagePath') as HTMLElement;
+    element.click();
+
   }
 }

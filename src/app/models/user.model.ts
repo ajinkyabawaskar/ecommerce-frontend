@@ -4,8 +4,8 @@ export class User {
     username: string;
     password: string;
     email: string;
-    imagePath: string;
+    imagePath: any;
     createdAt: Date;
     cart: String[];
-    token?: string; 
+    token?: string;
 }
