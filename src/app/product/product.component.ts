@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {ProductService} from '../services/product.service';
 import {first} from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { CartService } from '../services/cart.service';
 
 @Component({
   selector: 'app-product',
@@ -15,12 +16,24 @@ export class ProductComponent implements OnInit {
   isLoading: boolean = true;
   @Input() category : string;
 
-  constructor( private productService: ProductService, private router : Router) {
+  constructor( private productService: ProductService, private router : Router,private cartService:CartService ){
 
   }
 
   ngOnInit(): void {
     this.getProductsByCategory(this.category);
+  }
+
+  addToCart(product:any){
+    console.log(product);
+    this.cartService.addProductToCart(product).subscribe({
+      next:(msg)=>{
+        console.log(msg);
+      },
+      error:error=>{
+        console.log(error);
+      }
+    })
   }
 
   getProductsByCategory(category: string) {

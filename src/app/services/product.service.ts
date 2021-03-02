@@ -38,6 +38,7 @@ export class ProductService {
     );
   }
 
+
   getProductsByName(name: string) {
     return this.http.get<any>(`${environment.apiUrl}/product/name/${name}`).pipe(
       map(
