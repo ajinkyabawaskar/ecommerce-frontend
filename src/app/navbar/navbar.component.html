@@ -38,7 +38,8 @@
         </button>
         <button *ngIf="loggedIn && router.url != '/cart'" mat-flat-button color="primary" routerLink="/cart"
             class="mr-2">
-            <mat-icon matBadge="4" matBadgeColor="warn" matBadgeSize="small">shopping_cart</mat-icon>
+      <!--      <mat-icon  matBadge="4" matBadgeColor="warn" matBadgeSize="small">shopping_cart</mat-icon>-->
+      <mat-icon  >shopping_cart</mat-icon>
         </button>
         <button *ngIf="loggedIn" mat-flat-button (click)="logout()">Logout</button>
     </mat-toolbar>

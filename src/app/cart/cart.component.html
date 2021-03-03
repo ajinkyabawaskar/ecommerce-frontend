@@ -1,1 +1,28 @@
-Cart works!
+<mat-card>
+    <mat-list>
+        <h3 matSubheader>My CART</h3>
+        <mat-button style="float: right;size: 30;" mat-fab color="red" type="button" (click)="clearAll()">
+            <mat-label><b>Clear</b></mat-label><br>
+            <mat-icon>delete</mat-icon>
+          </mat-button>
+        <br>
+        <br>
+        <br>
+        <br>
+        <mat-list-item *ngFor="let product of products">
+           
+            <img src="{{product.image}}" height="30" width="30"> 
+            
+            
+            <mat-button type="button" (click)="removeProduct(product)" style="float: right;" mat-fab color="red">
+                <mat-icon type="button"  (click)="removeProduct(product)" style="color: red;">delete</mat-icon>
+              </mat-button>
+           <h4 matLine>{{product.name}}</h4>
+         <p matLine class="demo-2"> Actual Price : {{product.actualPrice}} </p>
+         <p matLine class="demo-2"> Offerred Price : {{product.offeredPrice}} </p>
+         <mat-divider></mat-divider>
+        </mat-list-item>
+        
+     </mat-list>
+
+</mat-card>
