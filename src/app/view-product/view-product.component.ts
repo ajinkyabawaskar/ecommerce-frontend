@@ -3,6 +3,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { ProductService } from '../services/product.service';
+import {CartService} from '../services/cart.service';
 
 @Component({
   selector: 'app-view-product',
@@ -16,7 +17,7 @@ export class ViewProductComponent implements OnInit {
   public product: any;
   public error: string;
 
-  constructor(private activatedRoute: ActivatedRoute, private productService: ProductService, private router: Router) {
+  constructor(private activatedRoute: ActivatedRoute, private productService: ProductService, private router: Router, private cartService: CartService) {
     this.id = this.activatedRoute.snapshot.paramMap.get('id');
   }
 
@@ -38,5 +39,15 @@ export class ViewProductComponent implements OnInit {
         }
       });
   }
-
+  addToCart(product:any){
+    console.log(product);
+    this.cartService.addProductToCart(product).subscribe({
+      next:(msg)=>{
+        console.log(msg);
+      },
+      error:error=>{
+        console.log(error);
+      }
+    })
+  }
 }
