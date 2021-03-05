@@ -1,16 +1,20 @@
 import { browser, logging } from 'protractor';
 import { AppPage } from './app.po';
 
-describe('workspace-project App', () => {
+describe('Protractor Demo App', function() {
+
   let page: AppPage;
 
-  beforeEach(() => {
+  beforeEach(async () => {
+    await browser.waitForAngularEnabled(false)
     page = new AppPage();
   });
 
-  it('should display welcome message', async () => {
-    await page.navigateTo();
-    expect(await page.getTitleText()).toEqual('cplayer app is running!');
+  it('Should have a title', function() {
+    browser.get('/');
+    browser.getTitle().then(value => {
+      expect(value).toBe('FlipZon')
+    })
   });
 
   afterEach(async () => {
