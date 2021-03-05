@@ -8,7 +8,9 @@ describe('Protractor Demo App', function() {
   beforeEach(async () => {
     browser.waitForAngularEnabled(false);
     page = new AppPage();
+
   });
+
 
   it('Should have a title', function() {
     browser.get('/');
@@ -39,12 +41,39 @@ describe('Protractor Demo App', function() {
     });
   });
 
-  it('Should redirect', async function() {
-    browser.getCurrentUrl().then(value => {
-      console.log(value);
-    });
+
+  it('Should click add to cart button', function() {
+    var elem = element(by.xpath('//mat-tab-body/div[1]/div[1]/app-product[1]/div[1]/div[1]/mat-card[1]/mat-card-actions[1]/div[1]/div[2]/button[1]'));
+    var until = protractor.ExpectedConditions;
+    browser.wait(until.elementToBeClickable(elem), 5000).then(
+      (ele2m) => {
+        elem.click();
+      }
+    );
   });
 
+  it('Should click cart button', function() {
+    var elem = element(by.xpath('//body/app-root[1]/app-navbar[1]/div[1]/mat-toolbar[1]/button[1]'));
+    var until = protractor.ExpectedConditions;
+    browser.wait(until.elementToBeClickable(elem), 5000).then(
+      (ele2m) => {
+        elem.click();
+      }
+    );
+  });
+  //div[contains(text(),'Asus TUF Ryzen 5 Quad Core 355')]
+
+  it('Should click check if product is present in cart', function() {
+    var elem = element(by.xpath('//div[contains(text(),\'Asus TUF Ryzen 5 Quad Core 355\')]'));
+    var until = protractor.ExpectedConditions;
+    browser.wait(until.visibilityOf(elem), 5000).then(
+      (ele2m) => {
+        let text = elem.getText();
+        expect(text).toContain('Asus TUF Ryzen 5');
+      }
+    );
+  });
+  
   afterEach(async () => {
     // Assert that there are no errors emitted from the browser
     const logs = await browser.manage().logs().get(logging.Type.BROWSER);
