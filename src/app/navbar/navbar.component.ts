@@ -1,12 +1,12 @@
-import { Component, OnDestroy, ChangeDetectorRef, OnInit } from '@angular/core';
-import { MediaMatcher } from '@angular/cdk/layout';
-import { Router } from '@angular/router';
-import { UserService } from '../services/user-service.service';
-import { User } from '../models/user.model';
-import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { first, map, startWith } from 'rxjs/operators';
-import { ProductService } from '../services/product.service';
+import {Component, OnDestroy, ChangeDetectorRef, OnInit} from '@angular/core';
+import {MediaMatcher} from '@angular/cdk/layout';
+import {Router} from '@angular/router';
+import {UserService} from '../services/user-service.service';
+import {User} from '../models/user.model';
+import {FormControl} from '@angular/forms';
+import {Observable} from 'rxjs';
+import {first, map, startWith} from 'rxjs/operators';
+import {ProductService} from '../services/product.service';
 
 @Component({
   selector: 'app-navbar',
@@ -19,6 +19,7 @@ export class NavbarComponent implements OnDestroy, OnInit {
   collapsed: boolean = true;
   loggedIn: boolean = true;
   error: string;
+  userData: User;
   products: any[] = [];
 
   myControl = new FormControl();
@@ -38,10 +39,25 @@ export class NavbarComponent implements OnDestroy, OnInit {
     }
     this.userService.loginEvent.subscribe((loggedIn) => this.loggedIn = loggedIn);
 
+    this.userService.getOwnData().pipe(first()).subscribe({
+      next: response => {
+        this.userData = response;
+      },
+      error: error => {
+        console.log(error);
+      }
+    });
   }
 
   ngOnInit() {
-
+    this.userService.getOwnData().pipe(first()).subscribe({
+      next: response => {
+          this.userData = response;
+      },
+      error: error => {
+        console.log(error);
+      }
+    });
   }
 
   onSearchChange(searchValue: string): void {
@@ -55,21 +71,21 @@ export class NavbarComponent implements OnDestroy, OnInit {
           error: error => {
             if (error === 'Access Denied') {
               this.error = 'JWT invalidated, log in again';
-            }
-            else {
+            } else {
               this.error = 'Something went wrong';
             }
           }
         });
-    }
-    else {
+    } else {
       this.products = [];
     }
   }
 
   onOptionChoose(option: string): void {
     let currentUrl = '/view-product/' + option;
-    this.router.routeReuseStrategy.shouldReuseRoute = function(){return false;};  
+    this.router.routeReuseStrategy.shouldReuseRoute = function() {
+      return false;
+    };
     this.router.navigateByUrl(currentUrl)
       .then(() => {
         this.router.navigated = false;

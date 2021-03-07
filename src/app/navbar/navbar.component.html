@@ -1,62 +1,81 @@
 <div class="example-container" [class.example-is-mobile]="mobileQuery.matches">
-    <mat-toolbar color="primary" class="example-toolbar">
-        <!-- <button mat-icon-button (click)="snav.toggle()">
-        <mat-icon>menu</mat-icon>
-    </button> -->
-        <h1 routerLink="/" class="example-app-name">FlipZon</h1>
+  <mat-toolbar color="primary" class="example-toolbar">
+    <!-- <button mat-icon-button (click)="snav.toggle()">
+    <mat-icon>menu</mat-icon>
+</button> -->
+    <h1 routerLink="/" class="example-app-name">FlipZon</h1>
 
-        <div *ngIf="loggedIn && (router.url != '/cart' && router.url != '/')" class="searchbar-container d-flex align-items-center pl-4 mt-2" > 
-            <form class="example-form">
-                <mat-form-field class="example-full-width" [style.width.vw]=30>
-                    <mat-label>Search</mat-label>
-                    <input
-                        type="text" 
-                        placeholder="Start typing to search products"
-                        aria-label="Number"
-                        matInput
-                        [formControl]="myControl"
-                        [matAutocomplete]="auto"
-                        (input)="onSearchChange($event.target.value)"
-                    >
-                    <mat-icon matSuffix>search</mat-icon>
-                    <mat-autocomplete #auto="matAutocomplete">
-                        <mat-option *ngFor="let option of products" [value]="option.name" (click)="onOptionChoose(option.pid)"> 
-                            <div class="d-flex align-items-center">
-                                <!-- <div style="background-image: url({{option.image}})" class="search-thumbnail"></div> -->
-                                <div class="">{{option.name}}</div>
-                            </div>
-                        </mat-option>
-                    </mat-autocomplete>
-                </mat-form-field>
-            </form>
-        </div>
-        <span class="example-spacer"></span>
-        <button *ngIf="router.url == '/' && !loggedIn" mat-flat-button routerLink="/signin">Sign In</button>
-        <button *ngIf="loggedIn && router.url != '/shop'" mat-flat-button color="primary" routerLink="/shop"
-            class="mr-2">
-            <mat-icon>arrow_back</mat-icon> Shop
-        </button>
-        <button *ngIf="loggedIn && router.url != '/cart'" mat-flat-button color="primary" routerLink="/cart"
-            class="mr-2">
-      <!--      <mat-icon  matBadge="4" matBadgeColor="warn" matBadgeSize="small">shopping_cart</mat-icon>-->
-      <mat-icon  >shopping_cart</mat-icon>
-        </button>
-        <button *ngIf="loggedIn" mat-flat-button (click)="logout()">Logout</button>
-    </mat-toolbar>
+    <div *ngIf="loggedIn && (router.url != '/cart' && router.url != '/')"
+         class="searchbar-container d-flex align-items-center pl-4 mt-2">
+      <form class="example-form">
+        <mat-form-field class="example-full-width" [style.width.vw]=30>
+          <mat-label>Search</mat-label>
+          <input
+            type="text"
+            placeholder="Start typing to search products"
+            aria-label="Number"
+            matInput
+            [formControl]="myControl"
+            [matAutocomplete]="auto"
+            (input)="onSearchChange($event.target.value)"
+          >
+          <mat-icon matSuffix>search</mat-icon>
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let option of products" [value]="option.name" (click)="onOptionChoose(option.pid)">
+              <div class="d-flex align-items-center">
+                <!-- <div style="background-image: url({{option.image}})" class="search-thumbnail"></div> -->
+                <div class="">{{option.name}}</div>
+              </div>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </form>
+    </div>
+    <span class="example-spacer"></span>
+    <button *ngIf="router.url == '/' && !loggedIn" mat-flat-button routerLink="/signin">Sign In</button>
 
-    <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
-        <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
-            fixedTopGap="56">
-            <mat-nav-list>
-                <a mat-list-item routerLink="/signin">Sign In</a>
-                <a mat-list-item routerLink="/signup">Create an account</a>
 
-            </mat-nav-list>
-        </mat-sidenav>
 
-        <mat-sidenav-content>
-            <!-- Inserts the login / signup / etc. components here -->
-            <router-outlet></router-outlet>
-        </mat-sidenav-content>
-    </mat-sidenav-container>
+    <div class="user-menu" *ngIf="loggedIn" mat-icon-button [matMenuTriggerFor]="menu" aria-label="User Menu">
+      <span class="d-flex">
+        <span class="" style="background-image: url({{ userData?.imagePath }})" class="user-avatar"></span>
+        <span class="user-name">
+        {{ userData?.name.substr(0,userData?.name.indexOf(' ')) | titlecase }}
+      </span>
+      </span>
+    </div>
+    <mat-menu #menu="matMenu">
+      <button *ngIf="loggedIn && router.url != '/shop'" mat-menu-item routerLink="/shop"
+              class="mr-2">
+        <mat-icon>style</mat-icon>
+        Shop
+      </button>
+      <button *ngIf="loggedIn && router.url != '/cart'" mat-menu-item routerLink="/cart"
+              class="mr-2">
+        <mat-icon>shopping_cart</mat-icon>
+        <span>Cart</span>
+      </button>
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        <span>Logout</span>
+      </button>
+
+    </mat-menu>
+  </mat-toolbar>
+
+  <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
+                 fixedTopGap="56">
+      <mat-nav-list>
+        <a mat-list-item routerLink="/signin">Sign In</a>
+        <a mat-list-item routerLink="/signup">Create an account</a>
+
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <!-- Inserts the login / signup / etc. components here -->
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 </div>
