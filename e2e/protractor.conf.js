@@ -25,6 +25,20 @@ exports.config = {
     print: function() {}
   },
   onPrepare() {
+    let HtmlReporter = require('protractor-beautiful-reporter');
+    jasmine.getEnv().addReporter(new HtmlReporter({
+      baseDirectory: 'reports_new',
+      screenshotsSubfolder: 'screenshotsOnFailure',
+      takeScreenShotsOnlyForFailedSpecs: true,
+      jsonsSubfolder: 'jsonFiles',
+      excludeSkippedSpecs: true,
+      preserveDirectory: false,
+      clientDefaults:{
+        showTotalDurationIn: "header",
+        totalDurationFormat: "h:m:s",
+        gatherBrowserLogs: true
+      },
+    }).getJasmine2Reporter());
     require('ts-node').register({
       project: require('path').join(__dirname, './tsconfig.json')
     });

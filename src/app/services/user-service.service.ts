@@ -58,4 +58,20 @@ export class UserService {
     return this.http.post(this.usersUrl + '/user/register', formData);
   }
 
+  getOwnData() {
+    return this.http.get<any>(`${environment.apiUrl}/user/`)
+      .pipe(
+        map(
+          response => {
+            // store user details and jwt token in local storage to keep user logged in between page refreshes
+            let user = new User();
+            user.name = response.name;
+            user.email = response.email;
+            user.imagePath = response.imagePath;
+            user.createdAt = response.createdAt;
+            user.username = response.username;
+            user.id = response.id;
+            return user;
+          }));
+  }
 }

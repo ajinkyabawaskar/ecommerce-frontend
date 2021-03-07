@@ -4,6 +4,7 @@
 /dist  
 /tmp  
 /out-tsc  
+e2e/reports_new/*
   
 # dependencies  
 /node_modules  
