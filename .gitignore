@@ -7,7 +7,8 @@
   
 # dependencies  
 /node_modules  
-  
+/e2e/reports_new/* 
+
 # IDEs and editors  
 /.idea  
 .project  
